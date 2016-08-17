@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">Sea Turtle Program</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_map">Map</string>
+    <string name="title_activity_nest_form">Nest Form</string>
+
+    <string-array name="activity_type_options">
+        <item>Nest</item>
+        <item>False Crawl</item>
+        <item>False Crawl above HTL</item>
+        <item>False Crawl below HTL</item>
+        <item>Possible Nest (No Eggs Found)</item>
+        <item>Undetected Nest (Wild Nest)</item>
+    </string-array>
+
+    <string-array name="complexity_options">
+        <item></item>
+        <item>Complex</item>
+        <item>Simple</item>
+    </string-array>
+
+    <string-array name="obstruction_options">
+        <item></item>
+        <item>Obstructed</item>
+        <item>Unobstructed</item>
+    </string-array>
+
+    <string-array name="sand_options">
+        <item></item>
+        <item>Dune</item>
+        <item>Washover</item>
+    </string-array>
+
+    <string-array name="location_options">
+        <item></item>
+        <item>Backbeach</item>
+        <item>Forebeach</item>
+    </string-array>
+
+</resources>

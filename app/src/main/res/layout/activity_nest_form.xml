@@ -1,0 +1,28 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="org.kashmirworldfoundation.seaturtle.NestFormActivity"
+    android:weightSum="1">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_below="@+id/button_new_nest"
+        android:layout_centerHorizontal="true">
+        <include layout="@layout/header"/>
+    </FrameLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/button_new_nest"
+        android:layout_centerHorizontal="true">
+
+        <include layout="@layout/content_nest_form"/>
+    </FrameLayout>
+
+
+
+</LinearLayout>
