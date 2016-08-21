@@ -1,8 +1,82 @@
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:map="http://schemas.android.com/apk/res-auto"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/map"
-    android:name="com.google.android.gms.maps.SupportMapFragment"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="org.kashmirworldfoundation.seaturtle.MapActivity" />
+    tools:context="org.kashmirworldfoundation.seaturtle.NestFormActivity"
+    android:weightSum="1">
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <CheckBox
+            style="@style/checkBox_map_filter"
+            android:background="@color/color_nest_default"
+            android:id="@+id/checkBox_nest_default" />
+
+        <TextView
+            style="@style/map_filter_filler" />
+
+        <CheckBox
+            style="@style/checkBox_map_filter"
+            android:background="@color/color_nest_emerge_less_than5"
+            android:id="@+id/checkBox_nest_emerge_less_than_5" />
+
+        <CheckBox
+            style="@style/checkBox_map_filter"
+            android:background="@color/color_nest_emerge_more_than5"
+            android:id="@+id/checkBox_nest_emerge_more_than_5" />
+
+        <TextView
+            style="@style/map_filter_filler" />
+
+        <CheckBox
+            style="@style/checkBox_map_filter"
+            android:background="@color/color_nest_more_than45"
+            android:id="@+id/checkBox_nest_more_than_45" />
+
+        <CheckBox
+            style="@style/checkBox_map_filter"
+            android:background="@color/color_nest_more_than50"
+            android:id="@+id/checkBox_nest_more_than_50" />
+
+        <CheckBox
+            style="@style/checkBox_map_filter"
+            android:background="@color/color_nest_more_than55"
+            android:id="@+id/checkBox_nest_more_than_55" />
+
+        <CheckBox
+            style="@style/checkBox_map_filter"
+            android:background="@color/color_nest_more_than70"
+            android:id="@+id/checkBox_nest_more_than_70" />
+
+        <TextView
+            style="@style/map_filter_filler" />
+
+        <Button
+            style="@style/button_extra_small"
+            android:text="Go"
+            android:id="@+id/button_refresh_map" />
+
+        <Button
+            style="@style/button_extra_small"
+            android:text="\?"
+            android:id="@+id/button_show_map_help" />
+
+
+    </LinearLayout>
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:map="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="org.kashmirworldfoundation.seaturtle.MapActivity" />
+
+</LinearLayout>

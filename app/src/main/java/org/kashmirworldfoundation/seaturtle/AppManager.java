@@ -1,26 +1,15 @@
 package org.kashmirworldfoundation.seaturtle;
 
-import android.content.Context;
+import android.content.ContentValues;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.Build;
-import android.os.Bundle;
-import android.provider.Settings;
-import android.support.v4.app.ActivityCompat;
-import android.util.Log;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 
 /**
  * Created by dwanna on 8/6/16.
  */
 public class AppManager {
     private static final String TAG = "***" + AppManager.class.getSimpleName();
+
     /**
      * current DBHelper class
      */
@@ -30,6 +19,11 @@ public class AppManager {
      * current MainActivity class
      */
     private static MainActivity mMainActivity;
+
+    /**
+     * current LoadDataForm class
+     */
+    private static LoadDataActivity mLoadDataActivity;
 
     /**
      * current MapActivity class
@@ -55,6 +49,11 @@ public class AppManager {
         mMainActivity = mainActivity;
         mDBHelper = new DBHelper(mainActivity.getBaseContext());
 
+    }
+
+    protected static void initLoadData(LoadDataActivity loadDataActivity) {
+
+        mLoadDataActivity = loadDataActivity;
     }
 
     /**
@@ -91,17 +90,36 @@ public class AppManager {
     protected static void launchNestForm(String nestID) {
         launchNestForm();
 
-        // set nest id to passed id
+        // set nest id
         mNestID = nestID;
-
     }
 
-    protected static Cursor getNestNewLocations() {
-        return mDBHelper.getNestNewLocations();
+    /**
+     * call the DBHelper initialize database
+     * @return
+     */
+    protected static boolean initializeDB() {
+
+        return true;
     }
 
-    protected static Cursor getNestOriginalLocations() {
-        return mDBHelper.getNestOriginalLocations();
+    protected static Cursor getNestLocations() {
+
+        return mDBHelper.getNestLocations();
     }
+
+    protected static boolean saveNestRecord(ContentValues record) throws Exception {
+
+
+
+        return true;
+    }
+
+    protected static boolean parseCSVFile(String pathName) {
+
+        mDBHelper.parseCSVFile(pathName);
+        return true;
+    }
+
 
 }

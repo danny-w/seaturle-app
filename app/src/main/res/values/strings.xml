@@ -2,6 +2,7 @@
     <string name="app_name">Sea Turtle Program</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_map">Map</string>
+    <string name="title_activity_load_data">Load Data</string>
     <string name="title_activity_nest_form">Nest Form</string>
 
     <string-array name="activity_type_options">
@@ -36,5 +37,4 @@
         <item>Backbeach</item>
         <item>Forebeach</item>
     </string-array>
-
 </resources>

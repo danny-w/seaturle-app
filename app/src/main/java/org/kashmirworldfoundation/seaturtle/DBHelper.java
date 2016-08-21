@@ -6,6 +6,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Toast;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 /**
  * Created by dwanna on 8/6/16.
@@ -34,7 +39,7 @@ public class DBHelper extends SQLiteOpenHelper {
     /**
      * tag used for tables with "clean" data from server
      */
-    private final String NEST = "Nest";
+    public static final String NEST = "Nest";
 
     /**
      * tag used for tables with "dirty" data editted locally
@@ -42,33 +47,21 @@ public class DBHelper extends SQLiteOpenHelper {
     private final String NEST_HISTORY = "NestHistory";
 
     /**
-     * string representing all updatable fields in Nest table
-     */
-    private final String NEST_UPDATABLE_FIELDS = ""
-            + "  nest_id, date_deposited"
-            //      0           1
-            + ", complexity, obstruction, sand, location"
-            //      2              3        4       5
-            + ", orig_latitude, orig_longitude, orig_position, orig_egg_count"
-            //      6               7               8               9
-            + ", new_latitude, new_longitude, new_position, new_egg_count"
-            //      10              11          12              13
-            + ", nest_description"
-            //      13
-            ;
-
-    /**
      * prefix to be added to new nest ID's
      * to distinguish from exisiting ones in DB
      */
     private final String NEW_PREFIX = "NEW";
 
-    /**
-     * static number that is used as new nest ID
-     * must be incremented after every use
-     */
-    private static int mNextID = 10001;
+    // the header of the CSV file with the quotes removed
+    private final String CSV_HEADER =
+            "UID,Beach,County,Activity #,Activity,Nest #,Ref #,Activity Date,Year,Month,Week,Dayofyear,JulianDate,Activity Comments,Encountered?,Species,Latitude,Longitude,Zone,Location,Nest Management,Light Management,Relocation,Total Eggs Laid By Female,Relocations,Relocation Date,Relocation Reason,Relocation Latitude,Relocation Longitude,Relocation Location,Washovers,Loss Reports,Prerelocations,Total Lost Eggs,Total Lost Hatchlings,Lost Nest,Emerge Date,Inventory Date,Incubation (days),Clutch Count,Shells>50%,Unhatched Eggs,Dead Hatchlings,Live Hatchlings,Final Status Unknown,Exclude From Calc,Hatch Success,Emergence Success,DNA ID,DNA Sample,DNA Match,Inventory Comments,Data Entry,Inventorier,Locator,submitted,modified,Program,";
 
+
+
+    private Context mContext;
+
+
+    private SQLiteDatabase mDB;
     /**
      * constructor create/open database
      * @param context
@@ -77,7 +70,8 @@ public class DBHelper extends SQLiteOpenHelper {
         // call super first
         super(context, DB_NAME, null, DB_VERSION);
 
-        SQLiteDatabase db = getReadableDatabase();
+        mDB = getWritableDatabase();
+        mContext = context;
 
         Log.d(TAG, "Database " + DB_NAME + " created/opened");
     }
@@ -86,34 +80,38 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         Log.d(TAG, "onCreate(" + db.toString() + ");");
 
-        // TODO REMOVE - for testing only
-        db.execSQL("DROP TABLE IF EXISTS " + NEST);
-        db.execSQL("DROP TABLE IF EXISTS " + NEST_HISTORY);
-        Log.d(TAG, "deleted tables");
-
         String sqlString;
 
         // build the sql statement to create table
         sqlString = "CREATE TABLE IF NOT EXISTS " + NEST + " ("
-                + "  id              INTEGER PRIMARY KEY AUTOINCREMENT"
-                + ", is_new          INTEGER DEFAULT 0"
-                + ", nest_id         TEXT UNIQUE"
-                + ", date_deposited  TEXT"
-                + ", complexity      TEXT"
-                + ", obstruction     TEXT"
-                + ", sand            TEXT"
-                + ", location        TEXT"
-                + ", orig_latitude   TEXT"
-                + ", orig_longitude  TEXT"
-                + ", orig_position   TEXT"
-                + ", orig_egg_count  TEXT"
-                + ", new_latitude    TEXT"
-                + ", new_longitude   TEXT"
-                + ", new_position    TEXT"
-                + ", new_egg_count   TEXT"
-                + ", nest_description TEXT"
-                + ", date_modified   DATETIME DEFAULT CURRENT_TIMESTAMP"
-                + ", version         INTEGER DEFAULT 0"
+                + "  uid                  INTEGER PRIMARY KEY AUTOINCREMENT"
+                + ", activity             TEXT"
+                + ", nest_num             TEXT UNIQUE"
+                + ", ref_num              TEXT UNIQUE"
+                + ", activity_date        TEXT"
+                + ", activity_comments    TEXT"
+                + ", latitude             TEXT"
+                + ", longitude            TEXT"
+                + ", location             TEXT"
+                + ", nest_mgmt            TEXT"
+                + ", relocation           TEXT"
+                + ", num_eggs_laid        TEXT"
+                + ", num_relocations      TEXT"
+                + ", relocation_date      TEXT"
+                + ", new_latitude         TEXT"
+                + ", new_longitude        TEXT"
+                + ", new_location         TEXT"
+                + ", num_washovers        TEXT"
+                + ", num_loss_reports     TEXT"
+                + ", num_lost_eggs        TEXT"
+                + ", num_lost_hatchlings  TEXT"
+                + ", lost_nest            TEXT"
+                + ", emerge_date          TEXT"
+                + ", inventory_date       TEXT"
+                + ", clutch_count         TEXT"
+                + ", locator              TEXT"
+                + ", date_modified        TEXT"
+                + ", version              INTEGER DEFAULT 0"
                 + ")";
 
         // execute the sql statement to build the table
@@ -121,85 +119,78 @@ public class DBHelper extends SQLiteOpenHelper {
 
         // create sql statement to create trigger for last modified
         sqlString = ""
-                + "CREATE TRIGGER IF NOT EXISTS last_modified_Nest "
+                + "CREATE TRIGGER IF NOT EXISTS update_version "
                 + " AFTER UPDATE ON Nest FOR EACH ROW "
                 + " BEGIN UPDATE Nest "
-                + "   SET date_modified = CURRENT_TIMESTAMP"
+                + "   SET version = old.version + 1"
                 + " WHERE id = old.id;"
-                + "  END";
+                + "   END";
 
         // execute sql statement to create trigger for last modified
         db.execSQL(sqlString);
 
-        // TODO add trigger to increment version
-
         // TODO add history table
 
         // TODO REMOVE for testin only
-        TestData.loadTestData(db, NEST);
+        //TestData.loadTestData(db, NEST);
 
     }
 
     /**
      * if the database version changes,
      * then need to drop all tables and recreate them
-     * @param db database object
-     * @param i  int, new version
-     * @param i1 int, old version
+     * @param db SQLite database object
+     * @param oldVersion int, new version
+     * @param newVersion int, old version
      */
     @Override
-    public void onUpgrade(SQLiteDatabase db, int i, int i1) {
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.d(TAG, "onUpgrade()");
 
-        // TODO uncomment all lines, commented for testing only
-        //db.execSQL("DROP TABLE IF EXISTS " + SERVER);
-        Log.d(TAG, "onUpgrade -> dropped table" + NEST);
+        initDB(db);
+    }
 
-        //db.execSQL("DROP TABLE IF EXISTS " + LOCAL);
-        Log.d(TAG, "onUpgrade -> dropped table" + NEST_HISTORY);
+    /**
+     * reinitialize the database by deleting info tables
+     * this function can be called on ugrade before mDB is initialized
+     */
+    private void initDB(SQLiteDatabase db) {
+        Log.d(TAG, "inititializeDB()");
 
+        // deleted info tables
+        db.execSQL("DROP TABLE IF EXISTS " + NEST);
+        db.execSQL("DROP TABLE IF EXISTS " + NEST_HISTORY);
+        Log.d(TAG, "inititializeDB -> deleted tables");
+
+        // recreate tables
         onCreate(db);
     }
 
     /**
-     * retrieve all original nest locations from database
-     * @return Cursor - query results
+     * override initDB with no arameters - uses mDB instead
      */
-    public Cursor getNestOriginalLocations() {
-        Log.d(TAG, "getNestOriginalLocations()");
-
-        SQLiteDatabase db = getWritableDatabase();
-
-        String sqlString = ""
-                + "SELECT nest_id, new_latitude, new_longitude, is_new"
-                + "  FROM " + NEST
-                ;
-        Cursor cursor = db.rawQuery(sqlString, null);
-        Log.d(TAG, "getNestOriginalLocations -> " + cursor.getCount() + " records");
-
-        return cursor;
+    public void initDB() {
+        initDB(mDB);
     }
 
     /**
-     * retrieve all original nest locations from database
+     * retrieve location information for all nests
      * @return Cursor - query results
      */
-    public Cursor getNestNewLocations() {
-        Log.d(TAG, "getNestNewLocations()");
+    public Cursor getNestLocations() {
+        Log.d(TAG, "getNestLocations()");
 
-        SQLiteDatabase db = getWritableDatabase();
-
+        // ref_num, latitude, longitude, new_latitude, new_longitude, activity_date, emerge_date, inventory_date
         String sqlString = ""
-                + "SELECT nest_id, orig_latitude, orig_longitude, is_new "
+                + "SELECT ref_num, latitude, longitude, new_latitude, new_longitude,"
+                + "       activity_date, emerge_date, inventory_date"
                 + "  FROM " + NEST
                 ;
-        Cursor cursor = db.rawQuery(sqlString, null);
+        Cursor cursor = mDB.rawQuery(sqlString, null);
         Log.d(TAG, "getNestNewLocations -> " + cursor.getCount() + " records");
 
         return cursor;
     }
-
-
 
     /**
      * retrieve all nest information for a specific nest id
@@ -208,15 +199,13 @@ public class DBHelper extends SQLiteOpenHelper {
     public Cursor getNestInfo(String nestID) {
         Log.d(TAG, "getData(" + nestID + ")");
 
-        SQLiteDatabase db = getWritableDatabase();
-
         String sqlString = ""
                 + "SELECT * "
                 + "  FROM " + NEST
                 + " WHERE nest_id = '" + nestID + "'";
                 ;
 
-        Cursor cursor = db.rawQuery(sqlString, null);
+        Cursor cursor = mDB.rawQuery(sqlString, null);
         Log.d(TAG, "getData -> " + cursor.getCount() + " records");
 
         return cursor;
@@ -225,9 +214,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public boolean saveNestRecord(ContentValues record) {
         Log.d(TAG, "saveNestRecord(" + record.toString() +")");
-
-        // open database connection
-        SQLiteDatabase db = getWritableDatabase();
 
         // search if record is in LocalDB
         Cursor cursor = getNestInfo(record.get("nest_id").toString());
@@ -242,7 +228,7 @@ public class DBHelper extends SQLiteOpenHelper {
             Log.d(TAG, "saveNestRecord -> inserting");
 
             // if result of insert is -1, then failed
-            if (db.insert(NEST, null, record) == -1) {
+            if (mDB.insert(NEST, null, record) == -1) {
                 return false;
             } else {
                 return true;
@@ -251,4 +237,148 @@ public class DBHelper extends SQLiteOpenHelper {
 
         return true;
     }
+
+    /**
+     *
+     * @param filepath
+     */
+    protected void parseCSVFile(String filepath) {
+
+        // try opening the file
+        FileReader file = null;
+        try {
+            file = new FileReader(filepath);
+        } catch (Exception e1) {
+            e1.printStackTrace();
+            Toast.makeText(mContext, "Unable to open file. Try a different one or check permissions.",
+                    Toast.LENGTH_SHORT).show();
+            // exit if unable to read
+            return;
+        }
+
+        BufferedReader buffer = new BufferedReader(file);
+        String line = "";
+
+        // try reading the first line
+        try {
+            // make sure the header line is valid
+            // exit otherwise
+            line = buffer.readLine();
+            line = line.replace("\"", "");
+            if (!line.equals(CSV_HEADER)) {
+                Log.d(TAG, "Error - File header has changed\n" + CSV_HEADER + "\n" + line);
+                Toast.makeText(mContext, "Error - File header has changed",
+                        Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "Contact admin or try older copy.",
+                        Toast.LENGTH_LONG).show();
+
+                return;
+            }
+
+        } catch (IOException e2) {
+            e2.printStackTrace();
+            return;
+        }
+
+        //start a database transaction to batch all the updates
+        mDB.beginTransaction();
+
+        // delete all existing records from info tables
+        int numDeletedRecords = mDB.delete(NEST, "1", null);
+        Log.d(TAG, "Deleted " + numDeletedRecords + " from " + NEST);
+        // TODO delete other tables
+
+        // used do-while instead of while in order to put the try-catch
+        // inside the loop. If one record has error, then continue
+        // processing the rest
+        do {
+            String[] fields = null;
+            try {
+                // read line from file
+                line = buffer.readLine();
+
+                // if no more lines, exit loop
+                if (line == null) {
+                    break;
+                }
+
+                Log.d(TAG, "processing CSV line:\n" + line);
+
+                // some of the fields may contain commas, so the line cannot be
+                // split using just comma, instead using ","
+                // the leading and trailing " must be deleted first
+                line = line.substring(1, line.length()-1);
+
+                // split it
+                fields = line.split("\",\"", -1);
+
+                // if no nest num then skip
+                if (fields[5].length() == 0) {
+                    continue;
+                }
+
+                // place split values into record
+                ContentValues record = new ContentValues(26);
+                record.put("activity", fields[4]);
+                record.put("nest_num", fields[5]);
+                record.put("ref_num", fields[6]);
+                record.put("activity_date", fields[7]);
+                record.put("activity_comments", fields[13]);
+                record.put("latitude", fields[16]);
+                record.put("longitude", fields[17]);
+                record.put("location", fields[19]);
+                record.put("nest_mgmt", fields[20]);
+                record.put("relocation", fields[22]);
+                record.put("num_eggs_laid", fields[23]);
+                record.put("num_relocations", fields[24]);
+                record.put("relocation_date", fields[25]);
+                record.put("new_latitude", fields[27]);
+                record.put("new_longitude", fields[28]);
+                record.put("new_location", fields[29]);
+                record.put("num_washovers", fields[30]);
+                record.put("num_loss_reports", fields[31]);
+                record.put("num_lost_eggs", fields[33]);
+                record.put("num_lost_hatchlings", fields[34]);
+                record.put("lost_nest", fields[35]);
+                record.put("emerge_date", fields[36]);
+                record.put("inventory_date", fields[37]);
+                record.put("clutch_count", fields[39]);
+                record.put("locator", fields[54]);
+                record.put("date_modified", fields[56]);
+
+                // insert record into database
+                mDB.insert(NEST, null, record);
+
+            } catch (Exception e2) {
+                e2.printStackTrace();
+                Toast.makeText(mContext, "Error processing record:\n" + line, Toast.LENGTH_LONG).show();
+
+                // proceed to next record
+                continue;
+            }
+        } while (true);
+
+
+        // commit db transaction
+        try {
+            mDB.setTransactionSuccessful();
+        }
+        catch(Exception e3) {
+            e3.printStackTrace();
+            Toast.makeText(mContext, "Error updating database. Contact admin.", Toast.LENGTH_LONG).show();
+        }
+
+        // end db transaction
+        mDB.endTransaction();
+
+        try {
+            buffer.close();
+        }
+        catch (IOException e4) {
+            e4.printStackTrace();
+            Toast.makeText(mContext, "Error closing file. Contact admin.", Toast.LENGTH_LONG).show();
+        }
+        Toast.makeText(mContext, "File " + filepath + " processed succesfuly", Toast.LENGTH_SHORT).show();
+    }
+
 }

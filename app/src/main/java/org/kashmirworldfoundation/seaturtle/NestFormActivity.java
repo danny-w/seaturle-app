@@ -157,7 +157,7 @@ public class NestFormActivity extends AppCompatActivity {
         Spinner spinner = (Spinner) findViewById(spinnerId);
 
         ArrayAdapter<CharSequence> adapter =
-                ArrayAdapter.createFromResource(getBaseContext(),
+                ArrayAdapter.createFromResource(this,
                         optionsId,
                         android.R.layout.simple_spinner_item);
 
@@ -209,7 +209,7 @@ public class NestFormActivity extends AppCompatActivity {
             };
 
             // build the dialog box
-            AlertDialog.Builder builder = new AlertDialog.Builder(getBaseContext());
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Are you sure you want to override?")
                     .setPositiveButton("Override", dialogClickListener)
                     .setNegativeButton("Cancel", dialogClickListener)
@@ -328,7 +328,7 @@ public class NestFormActivity extends AppCompatActivity {
         // TODO takes about 30 sec to get location
         // request one time location
         // permissions would have been already checked
-        mLocationManager.requestSingleUpdate("gps", mLocationListener, null);
+        //mLocationManager.requestSingleUpdate("gps", mLocationListener, null);
 
     }
 

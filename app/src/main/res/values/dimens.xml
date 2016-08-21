@@ -16,4 +16,7 @@
     <!-- size of buttons with icons instead od letters -->
     <dimen name="icon_button_size">35dp</dimen>
 
+    <!-- margin for map check boxes -->
+    <dimen name="map_checkbox_margin">3dp</dimen>
+
 </resources>

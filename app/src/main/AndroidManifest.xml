@@ -7,13 +7,13 @@
          Google Maps Android API v2, but you must specify either coarse or fine
          location permissions for the 'MyLocation' functionality. 
     -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -53,11 +53,28 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".LoadDataActivity"
+            android:label="@string/title_activity_load_data">
+            <intent-filter>
+                <action android:name="org.kashmirworldfoundation.seaturtle.LoadDataActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".NestFormActivity"
             android:label="@string/title_activity_nest_form"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="org.kashmirworldfoundation.seaturtle.NestFormActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".HelpActivity"
+            android:label="@string/title_activity_load_data">
+            <intent-filter>
+                <action android:name="org.kashmirworldfoundation.seaturtle.HelpActivity" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

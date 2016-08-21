@@ -3,4 +3,15 @@
     <color name="colorPrimary">#7dc684</color>
     <color name="colorPrimaryDark">#5dd67f</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="color_nest_checkBox_buttonTint">#ffcce6ff</color>
+    <color name="color_nest_default">#ff4d94ff</color>
+    <color name="color_nest_emerge_less_than5">#ff00cc00</color>
+    <color name="color_nest_emerge_more_than5">#ff9933ff</color>
+
+    <color name="color_nest_more_than70">#ff9933ff</color>
+    <color name="color_nest_more_than55">#ffff0000</color>
+    <color name="color_nest_more_than50">#ffff6600</color>
+    <color name="color_nest_more_than45">#ffffff00</color>
+
 </resources>

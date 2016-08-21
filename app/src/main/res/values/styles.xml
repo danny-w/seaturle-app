@@ -31,5 +31,44 @@
         <item name="android:layout_marginBottom">5dp</item>
     </style>
 
+    <style name="checkBox_map_filter">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">@dimen/map_checkbox_margin</item>
+        <item name="android:checked">true</item>
+        <item name="android:buttonTint">@color/color_nest_checkBox_buttonTint</item>
+    </style>
+
+    <style name="button_extra_small">
+        <item name="android:layout_width">37dp</item>
+        <item name="android:layout_height">37dp</item>
+        <item name="android:paddingRight">2dp</item>
+        <item name="android:paddingLeft">2dp</item>
+        <item name="android:layout_margin">@dimen/map_checkbox_margin</item>
+    </style>
+
+    <style name="map_filter_filler">
+        <item name="android:layout_width">5dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+    </style>
+
+
+    <style name="help_map_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+        <item name="android:layout_marginTop">3dp</item>
+        <item name="android:layout_marginBottom">3dp</item>
+    </style>
+
+    <style name="help_map_block">
+        <item name="android:layout_width">25dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+        <item name="android:layout_marginTop">3dp</item>
+        <item name="android:layout_marginBottom">3dp</item>
+
+    </style>
 
 </resources>

@@ -2,8 +2,6 @@ package org.kashmirworldfoundation.seaturtle;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -42,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private void initGui() {
 
         Button buttonMap = (Button) findViewById(R.id.button_map);
+        Button buttonLoadData = (Button) findViewById(R.id.button_load_data);
         Button buttonNewNest = (Button) findViewById(R.id.button_new_activity);
 
         buttonMap.setOnClickListener(new View.OnClickListener() {
@@ -51,6 +50,15 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        buttonLoadData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent("org.kashmirworldfoundation.seaturtle.LoadDataActivity");
+                startActivity(intent);
+            }
+        });
+
 
         buttonNewNest.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         Spinner spinner = (Spinner) findViewById(R.id.spinner_activity_type);
 
         ArrayAdapter<CharSequence> adapter =
-                ArrayAdapter.createFromResource(getBaseContext(),
+                ArrayAdapter.createFromResource(this,
                         R.array.activity_type_options,
                         android.R.layout.simple_spinner_item);
 
