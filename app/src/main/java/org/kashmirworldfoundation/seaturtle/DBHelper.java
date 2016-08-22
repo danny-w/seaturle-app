@@ -196,27 +196,77 @@ public class DBHelper extends SQLiteOpenHelper {
      * retrieve all nest information for a specific nest id
      * @return Cursor - query results
      */
-    public Cursor getNestInfo(String nestID) {
-        Log.d(TAG, "getData(" + nestID + ")");
+    public ContentValues getNestInfo(String refNum) {
+        Log.d(TAG, "getNestInfo(" + refNum + ")");
+
+        // nest_num, ref_num, activity_date, activity_comments, latitude, longitude, location,
+        // nest_mgmt, relocation, num_eggs_laid,
+        // num_relocations, relocation_date, new_latitude, new_longitude, new_location,
+        // num_washovers, num_loss_reports, num_lost_eggs, num_lost_hatchlings, lost_nest,
+        // emerge_date, inventory_date, clutch_count, locator, date_modified, version
 
         String sqlString = ""
-                + "SELECT * "
+                + "SELECT ref_num, activity_date, emerge_date, nest_mgmt, num_eggs_laid, "
+                + "       activity_comments, latitude, longitude, location,"
+                + "       new_latitude, new_longitude, new_location"
+                + "       "
+                + "       "
+                + "       "
                 + "  FROM " + NEST
-                + " WHERE nest_id = '" + nestID + "'";
+                + " WHERE ref_num = '" + refNum + "'";
                 ;
 
-        Cursor cursor = mDB.rawQuery(sqlString, null);
-        Log.d(TAG, "getData -> " + cursor.getCount() + " records");
 
-        return cursor;
+
+        // run query
+        Cursor cursor = mDB.rawQuery(sqlString, null);
+
+        Log.d(TAG, "getNestInfo -> " + cursor.getCount() + " nests");
+
+        // extract values
+        if (cursor.moveToFirst()) {
+            ContentValues record = new ContentValues();
+
+            record.put("ref_num", cursor.getString(0));
+            record.put("activity_date", cursor.getString(1));
+            record.put("emerge_date", cursor.getString(2));
+            record.put("nest_mgmt", cursor.getString(3));
+            record.put("num_eggs_laid", cursor.getString(4));
+            record.put("activity_comments", cursor.getString(5));
+            record.put("latitude", cursor.getString(6));
+            record.put("longitude", cursor.getString(7));
+            record.put("location", cursor.getString(8));
+            //record.put("", cursor.getString(9));
+            //record.put("", cursor.getString(10));
+            //record.put("", cursor.getString(11));
+            //record.put("", cursor.getString(12));
+            //record.put("", cursor.getString(13));
+            //record.put("", cursor.getString(14));
+            //record.put("", cursor.getString(15));
+            //record.put("", cursor.getString(16));
+            //record.put("", cursor.getString(17));
+            //record.put("", cursor.getString(18));
+            //record.put("", cursor.getString(19));
+            //record.put("", cursor.getString(20));
+
+
+            return record;
+        }
+
+        return null;
     }
 
 
     public boolean saveNestRecord(ContentValues record) {
         Log.d(TAG, "saveNestRecord(" + record.toString() +")");
 
+        String sqlString = ""
+                + "SELECT ref_num"
+                + "  FROM " + NEST
+                + " WHERE ref_num = '" + record.getAsString("ref_num") + "'";
+
         // search if record is in LocalDB
-        Cursor cursor = getNestInfo(record.get("nest_id").toString());
+        Cursor cursor = mDB.rawQuery(sqlString, null);
 
         if (cursor.moveToFirst()) {
             // if record exists, archive

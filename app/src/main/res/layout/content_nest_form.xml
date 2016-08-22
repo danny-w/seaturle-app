@@ -7,251 +7,76 @@
     android:layout_height="match_parent"
     android:weightSum="1">
 
-    <!-- header -->
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/nest_form_layout_height"
-        android:layout_alignParentTop="true"
-        >
-
-        <!-- Date Deposited -->
+        style="@style/nest_form_horz_layout">
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Nest 12-" />
+            style="@style/nest_form_label"
+            android:text="Nest ID" />
 
         <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:ems="10"
-            android:enabled="true"
-            android:layout_weight="3"
-            android:id="@+id/nest_id" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="date"
-            android:ems="10"
-            android:hint="Date Deposited"
+            style="@style/nest_form_text"
             android:layout_weight="1"
-            android:id="@+id/date_deposited"
-            />
-        <Button
-            android:layout_width="@dimen/icon_button_size"
-            android:layout_height="@dimen/icon_button_size"
-            android:padding="0dp"
-            android:background="@drawable/calendar_icon"
-            android:id="@+id/get_date_deposited" />
+            android:id="@+id/nest_form_ref_num" />
 
     </LinearLayout>
 
-    <!-- spinner set 1 -->
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/nest_form_layout_height"
-        android:layout_alignParentTop="true"
-        >
+        style="@style/nest_form_horz_layout">
+        <TextView
+            style="@style/nest_form_label"
+            android:text="Activity Date" />
 
-        <!-- Complexity -->
-        <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/complexity_spinner"
-            style="@style/spinner_style"
-            android:layout_weight="1"/>
-
-        <!-- Obstruction -->
-        <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/obstruction_spinner"
-            style="@style/spinner_style"
-            android:layout_weight="1"/>
+        <EditText
+            style="@style/nest_form_text"
+            android:layout_weight="1"
+            android:id="@+id/nest_form_activity_date" />
 
     </LinearLayout>
 
-    <!-- spinner set 2 -->
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/nest_form_layout_height"
-        >
-        <!-- Sand -->
-        <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/sand_spinner"
-            style="@style/spinner_style"
-            android:layout_weight="1"/>
+        style="@style/nest_form_horz_layout">
+        <TextView
+            style="@style/nest_form_label"
+            android:text="Emerge Date" />
 
-        <!-- Location -->
-        <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/location_spinner"
-            style="@style/spinner_style"
-            android:layout_weight="1"/>
+        <EditText
+            style="@style/nest_form_text"
+            android:layout_weight="1"
+            android:id="@+id/nest_form_emerge_date" />
 
     </LinearLayout>
 
-    <!-- original location lat/lon -->
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/nest_form_layout_height"
-        >
-
+        style="@style/nest_form_horz_layout">
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Orig. location" />
+            style="@style/nest_form_label"
+            android:text="Nest Mgmt" />
 
         <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
-            android:ems="10"
+            style="@style/nest_form_text"
             android:layout_weight="1"
-            android:id="@+id/original_latitude" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
-            android:ems="10"
-            android:layout_weight="1"
-            android:id="@+id/original_longitude" />
-
-        <Button
-            android:layout_width="@dimen/icon_button_size"
-            android:layout_height="@dimen/icon_button_size"
-            android:padding="0dp"
-            android:background="@drawable/globe_search_icon"
-            android:id="@+id/get_original_location" />
-    </LinearLayout>
-
-    <!-- original location position/eggs -->
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/nest_form_layout_height"
-        >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="    Position(--0-+) " />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
-            android:ems="10"
-            android:layout_weight="1"
-            android:id="@+id/original_position" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="    # Eggs "/>
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
-            android:ems="10"
-            android:layout_weight="1"
-            android:id="@+id/original_egg_count" />
+            android:id="@+id/nest_form_nest_mgmt" />
 
     </LinearLayout>
 
-    <!-- re-location lat/lon -->
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/nest_form_layout_height"
-        >
-
+        style="@style/nest_form_horz_layout">
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Re-location    " />
+            style="@style/nest_form_label"
+            android:text="# Eggs Laid" />
 
         <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
-            android:ems="10"
+            style="@style/nest_form_text"
             android:layout_weight="1"
-            android:id="@+id/new_latitude" />
+            android:id="@+id/nest_form_num_eggs_laid" />
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
-            android:ems="10"
-            android:layout_weight="1"
-            android:id="@+id/new_longitude" />
-
-        <Button
-            android:layout_width="@dimen/icon_button_size"
-            android:layout_height="@dimen/icon_button_size"
-            android:padding="0dp"
-            android:background="@drawable/globe_search_icon"
-            android:id="@+id/get_new_location" />
     </LinearLayout>
 
-    <!-- re-location position/eggs -->
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/nest_form_layout_height"
-        >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="    Position(--0-+)"/>
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
-            android:ems="10"
-            android:id="@+id/new_position"
-            android:layout_weight="1" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="    # Eggs"/>
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:ems="10"
-            android:id="@+id/new_egg_count"
-            android:layout_weight="1" />
-    </LinearLayout>
-
-    <!-- crawlway / nest description -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Crawlway and Nest Description"
+        android:text="Activity Comment"
         android:layout_marginTop="5dp" />
     <EditText
         android:layout_width="match_parent"
@@ -259,8 +84,54 @@
         android:inputType="textMultiLine"
         android:layout_marginTop="5dp"
         android:ems="10"
-        android:id="@+id/nest_description"
-        android:layout_weight="0.20" />
+        android:enabled="false"
+        android:id="@+id/nest_form_activity_comment" />
+
+    <LinearLayout
+        style="@style/nest_form_horz_layout">
+        <TextView
+            style="@style/nest_form_label"
+            android:text="Original Loc" />
+
+        <EditText
+            style="@style/nest_form_text"
+            android:layout_weight="0.33"
+            android:id="@+id/nest_form_latitude" />
+
+        <EditText
+            style="@style/nest_form_text"
+            android:layout_weight="0.33"
+            android:id="@+id/nest_form_longitude" />
+
+        <EditText
+            style="@style/nest_form_text"
+            android:layout_weight="0.34"
+            android:id="@+id/nest_form_location" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/nest_form_horz_layout">
+        <TextView
+            style="@style/nest_form_label"
+            android:text="New Loc" />
+
+        <EditText
+            style="@style/nest_form_text"
+            android:layout_weight="0.33"
+            android:id="@+id/nest_form_new_latitude" />
+
+        <EditText
+            style="@style/nest_form_text"
+            android:layout_weight="0.33"
+            android:id="@+id/nest_form_new_longitude" />
+
+        <EditText
+            style="@style/nest_form_text"
+            android:layout_weight="0.34"
+            android:id="@+id/nest_form_new_location" />
+
+    </LinearLayout>
 
     <!-- control buttons -->
     <LinearLayout

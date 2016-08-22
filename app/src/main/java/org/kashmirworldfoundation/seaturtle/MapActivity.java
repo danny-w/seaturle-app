@@ -24,7 +24,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.LocationSource;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -33,15 +32,12 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.util.Calendar;
-import java.util.concurrent.TimeUnit;
-
 public class MapActivity extends FragmentActivity implements
         OnMapReadyCallback, GoogleMap.OnMarkerClickListener, LocationListener {
     private static final String TAG = "***" + MapActivity.class.getSimpleName();
 
 
-    private float mZoomLevel = 20; //This goes up to 21
+    private float mZoomLevel = 19; //This goes up to 21
 
     private GoogleMap mMap;
 
@@ -105,7 +101,7 @@ public class MapActivity extends FragmentActivity implements
             @Override
             public void onCameraChange(CameraPosition cameraPosition) {
                 mZoomLevel = cameraPosition.zoom;
-                Toast.makeText(getBaseContext(), "New zoom level: " + mZoomLevel, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getBaseContext(), "New zoom level: " + mZoomLevel, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -199,7 +195,7 @@ public class MapActivity extends FragmentActivity implements
                 // extract record from cursor
                 // nest_num, latitude, longitude, new_latitude, new_longitude, activity_date, emerge_date, inventory_date
 
-                String nestNum = "";
+                String refNum = "";
                 float latitude = 0;
                 float longitude = 0;
 
@@ -209,7 +205,7 @@ public class MapActivity extends FragmentActivity implements
                         continue;
                     }
 
-                    nestNum = cursor.getString(0);
+                    refNum = cursor.getString(0);
 
                     // check if new_latitude and new_Longitude are there then use those values
                     // other wise use original values
@@ -229,7 +225,7 @@ public class MapActivity extends FragmentActivity implements
                     // calculate days since nest first emerge date
                     int numDaysEmerge = AppUtil.calcNumDaysElapsed(cursor.getString(6));
 
-                    Log.d(TAG, "nest #" + nestNum + " @ " + latitude + "x" + longitude
+                    Log.d(TAG, "nest #" + refNum + " @ " + latitude + "x" + longitude
                             + ", #" + cursor.getString(5) + "# " + numDaysActivity + " days active"
                             + ", #" + cursor.getString(6) + "# " + numDaysEmerge + " days emerged");
 
@@ -277,15 +273,15 @@ public class MapActivity extends FragmentActivity implements
 
                     mMap.addMarker(new MarkerOptions()
                             .position(nestLatLng)
-                            .title("#" + nestNum)
+                            .title(refNum)
                             //.snippet("My Snippet"+"\n"+"1st Line Text"+"\n"+"2nd Line Text"+"\n"+"3rd Line Text")
                             .snippet("" + numDaysActivity + " days")
                             .icon(BitmapDescriptorFactory.defaultMarker(hue)));
 
-                    Log.d(TAG, "addNests -> " + nestNum + ": " + latitude + ", " + longitude);
+                    Log.d(TAG, "addNests -> " + refNum + ": " + latitude + ", " + longitude);
 
                 } catch (Exception e) {
-                    Toast.makeText(this, "Error parsing Nest ID " + nestNum, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Error parsing Nest ID " + refNum, Toast.LENGTH_SHORT).show();
                     Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "Error\n" + cursor.toString());
                     e.printStackTrace();

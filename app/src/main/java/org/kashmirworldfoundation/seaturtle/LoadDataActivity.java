@@ -66,6 +66,9 @@ public class LoadDataActivity extends ListActivity {
                     if (response == DialogInterface.BUTTON_POSITIVE) {
                         // TODO
                         AppManager.parseCSVFile(pathName);
+
+                        // close activity
+                        onBackPressed();
                     }
                 }
             };
@@ -164,7 +167,7 @@ public class LoadDataActivity extends ListActivity {
                 android.R.layout.simple_list_item_2, android.R.id.text1, values);
         setListAdapter(adapter);
 
-        Toast.makeText(this, "Opening " + pathName, Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "Opening " + pathName, Toast.LENGTH_LONG).show();
     }
 
     /**

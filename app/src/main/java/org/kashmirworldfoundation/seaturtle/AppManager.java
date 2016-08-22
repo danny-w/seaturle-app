@@ -39,7 +39,7 @@ public class AppManager {
      * nest id of current record being edited
      * set to null to indicate new record
      */
-    private static String mNestID = null;
+    private static String mRefNum = null;
 
     /**
      * called by MainActivity when it starts
@@ -73,25 +73,30 @@ public class AppManager {
         mNestFormActivity = nestFormActivity;
 
         // check if mNestID is defined, then this is an exisiting record
-        if (mNestID != null) {
+        if (mRefNum != null) {
+
             // populate nest form from database
+            mNestFormActivity.populateFields(mDBHelper.getNestInfo(mRefNum));
         }
     }
 
     protected static void launchNestForm() {
         // assume new record, set nest id to null
-        mNestID = null;
+        mRefNum = null;
 
         // launch new nest form activity
         Intent intent = new Intent("org.kashmirworldfoundation.seaturtle.NestFormActivity");
         mMainActivity.startActivity(intent);
     }
 
-    protected static void launchNestForm(String nestID) {
+    protected static void launchNestForm(String refNum) {
+        // start activity
         launchNestForm();
 
         // set nest id
-        mNestID = nestID;
+        // initNestForm checks if this value is set
+        // and populates the form accordingly
+        mRefNum = refNum;
     }
 
     /**
@@ -108,18 +113,10 @@ public class AppManager {
         return mDBHelper.getNestLocations();
     }
 
-    protected static boolean saveNestRecord(ContentValues record) throws Exception {
-
-
-
-        return true;
-    }
-
     protected static boolean parseCSVFile(String pathName) {
 
         mDBHelper.parseCSVFile(pathName);
         return true;
     }
-
 
 }
