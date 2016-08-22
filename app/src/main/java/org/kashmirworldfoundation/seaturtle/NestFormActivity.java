@@ -43,7 +43,9 @@ public class NestFormActivity extends AppCompatActivity {
 
         ((EditText) findViewById(R.id.nest_form_ref_num)).setText(record.getAsString("ref_num"));
         ((EditText) findViewById(R.id.nest_form_activity_date)).setText(record.getAsString("activity_date"));
+        ((EditText) findViewById(R.id.nest_form_activity_num_days)).setText(record.getAsString("activity_num_days"));
         ((EditText) findViewById(R.id.nest_form_emerge_date)).setText(record.getAsString("emerge_date"));
+        ((EditText) findViewById(R.id.nest_form_emerge_num_days)).setText(record.getAsString("emerge_num_days"));
         ((EditText) findViewById(R.id.nest_form_nest_mgmt)).setText(record.getAsString("nest_mgmt"));
         ((EditText) findViewById(R.id.nest_form_activity_comment)).setText(record.getAsString("activity_comment"));
         ((EditText) findViewById(R.id.nest_form_latitude)).setText(record.getAsString("latitude"));

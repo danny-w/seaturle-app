@@ -227,9 +227,21 @@ public class DBHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             ContentValues record = new ContentValues();
 
+            // calculate days elapsed
+            String activityNumDays = "";
+            String emergeNumDays = "";
+            try {
+                activityNumDays = String.valueOf(AppUtil.calcNumDaysElapsed(cursor.getString(1)));
+                emergeNumDays = String.valueOf(AppUtil.calcNumDaysElapsed(cursor.getString(2)));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
             record.put("ref_num", cursor.getString(0));
             record.put("activity_date", cursor.getString(1));
+            record.put("activity_num_days", activityNumDays);
             record.put("emerge_date", cursor.getString(2));
+            record.put("emerge_num_days", emergeNumDays);
             record.put("nest_mgmt", cursor.getString(3));
             record.put("num_eggs_laid", cursor.getString(4));
             record.put("activity_comments", cursor.getString(5));

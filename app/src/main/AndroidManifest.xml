@@ -72,7 +72,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".HelpActivity"
-            android:label="@string/title_activity_load_data">
+            android:label="@string/app_version">
             <intent-filter>
                 <action android:name="org.kashmirworldfoundation.seaturtle.HelpActivity" />
 

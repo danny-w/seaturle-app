@@ -89,7 +89,7 @@ public class LoadDataActivity extends ListActivity {
     private void initGUI() {
         Button goFolderHome = (Button) findViewById(R.id.button_folder_home);
         Button goFolderUp = (Button) findViewById(R.id.button_folder_up);
-        Button goFolderRoot = (Button) findViewById(R.id.button_folder_root);
+        //Button goFolderRoot = (Button) findViewById(R.id.button_folder_root);
 
         // add on click listener for the Home button
         goFolderHome.setOnClickListener(new View.OnClickListener() {
@@ -111,6 +111,7 @@ public class LoadDataActivity extends ListActivity {
             }
         });
 
+        /*
         // add on click listener for the Root button
         goFolderRoot.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,6 +119,7 @@ public class LoadDataActivity extends ListActivity {
                 initList(ROOT);
             }
         });
+        */
     }
 
     /**

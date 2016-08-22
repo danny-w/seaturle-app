@@ -15,14 +15,6 @@
 
         <CheckBox
             style="@style/checkBox_map_filter"
-            android:background="@color/color_nest_default"
-            android:id="@+id/checkBox_nest_default" />
-
-        <TextView
-            style="@style/map_filter_filler" />
-
-        <CheckBox
-            style="@style/checkBox_map_filter"
             android:background="@color/color_nest_emerge_less_than5"
             android:id="@+id/checkBox_nest_emerge_less_than_5" />
 
@@ -33,6 +25,11 @@
 
         <TextView
             style="@style/map_filter_filler" />
+
+        <CheckBox
+            style="@style/checkBox_map_filter"
+            android:background="@color/color_nest_less_than45"
+            android:id="@+id/checkBox_nest_default" />
 
         <CheckBox
             style="@style/checkBox_map_filter"

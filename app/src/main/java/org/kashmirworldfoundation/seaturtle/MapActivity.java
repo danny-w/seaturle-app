@@ -181,10 +181,11 @@ public class MapActivity extends FragmentActivity implements
      *      - if 55 or more days -> red
      *      - if 50 or more days -> orange
      *      - if 45 or more days -> yellow
-     *      - if less than 45 days -> blue
+     *      - if less than 45 days -> green
      */
     private void addMarkers() {
 
+        // get records from database
         Cursor cursor = AppManager.getNestLocations();
 
         // move to first record and confirm non-empty set
@@ -200,11 +201,12 @@ public class MapActivity extends FragmentActivity implements
                 float longitude = 0;
 
                 try {
-                    // check if inventory date then skip
+                    // skip record if inventory date set
                     if (cursor.getString(7).length() > 0) {
                         continue;
                     }
 
+                    // use refNum instead of nestNum
                     refNum = cursor.getString(0);
 
                     // check if new_latitude and new_Longitude are there then use those values
@@ -232,8 +234,14 @@ public class MapActivity extends FragmentActivity implements
                     // color code for marker
                     float hue;
 
+                    // body of marker pop up box
+                    String markerSnippet = numDaysActivity + " days";
+
                     // check if there is an emerge date
                     if (numDaysEmerge > 0) {
+                        // add to marker snippet
+                        markerSnippet = markerSnippet + "\n" + numDaysEmerge + " days";
+
                         if (numDaysEmerge < 5) {
                             // check filter, skip if corresponding check box is not checked
                             if (!mCheckBoxEmergeLessThan5.isChecked()) { continue; }
@@ -267,7 +275,7 @@ public class MapActivity extends FragmentActivity implements
                         } else {
                             // check filter, skip if corresponding check box is not checked
                             if (!mCheckBoxDefault.isChecked()) { continue; }
-                            hue = AppUtil.colorToHSV(this, R.color.color_nest_default);
+                            hue = AppUtil.colorToHSV(this, R.color.color_nest_less_than45);
                         }
                     }
 
@@ -275,7 +283,7 @@ public class MapActivity extends FragmentActivity implements
                             .position(nestLatLng)
                             .title(refNum)
                             //.snippet("My Snippet"+"\n"+"1st Line Text"+"\n"+"2nd Line Text"+"\n"+"3rd Line Text")
-                            .snippet("" + numDaysActivity + " days")
+                            .snippet(markerSnippet)
                             .icon(BitmapDescriptorFactory.defaultMarker(hue)));
 
                     Log.d(TAG, "addNests -> " + refNum + ": " + latitude + ", " + longitude);

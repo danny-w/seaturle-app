@@ -18,52 +18,43 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                style="@style/help_map_block"
-                android:background="@color/color_nest_default"/>
-            <TextView
-                style="@style/help_map_block"/>
-            <TextView
-                style="@style/help_map_text"
-                android:text="Default color" />
-        </LinearLayout>
-
-        <TextView
-            style="@style/help_map_block"/>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            style="@style/simple_layout_horz">
             <TextView
                 style="@style/help_map_block"
                 android:background="@color/color_nest_emerge_less_than5"/>
             <TextView
-                style="@style/help_map_block"/>
+                style="@style/help_map_filler"/>
             <TextView
                 style="@style/help_map_text"
                 android:text="Emerged less than 5 days" />
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            style="@style/simple_layout_horz">
             <TextView
                 style="@style/help_map_block"
                 android:background="@color/color_nest_emerge_more_than5"/>
             <TextView
-                style="@style/help_map_block"/>
+                style="@style/help_map_filler"/>
             <TextView
                 style="@style/help_map_text"
                 android:text="Emerged more than 5 days" />
         </LinearLayout>
 
         <TextView
-            style="@style/help_map_block"/>
+            style="@style/help_map_filler"/>
+
+        <LinearLayout
+            style="@style/simple_layout_horz">
+            <TextView
+                style="@style/help_map_block"
+                android:background="@color/color_nest_less_than45"/>
+            <TextView
+                style="@style/help_map_filler"/>
+            <TextView
+                style="@style/help_map_text"
+                android:text="Nested less than 45 days" />
+        </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
@@ -73,56 +64,47 @@
                 style="@style/help_map_block"
                 android:background="@color/color_nest_more_than45"/>
             <TextView
-                style="@style/help_map_block"/>
+                style="@style/help_map_filler"/>
             <TextView
                 style="@style/help_map_text"
                 android:text="Nested more than 45 days" />
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            style="@style/simple_layout_horz">
             <TextView
                 style="@style/help_map_block"
                 android:background="@color/color_nest_more_than50"/>
             <TextView
-                style="@style/help_map_block"/>
+                style="@style/help_map_filler"/>
             <TextView
                 style="@style/help_map_text"
                 android:text="Nested more than 50 days" />
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            style="@style/simple_layout_horz">
             <TextView
                 style="@style/help_map_block"
                 android:background="@color/color_nest_more_than55"/>
             <TextView
-                style="@style/help_map_block"/>
+                style="@style/help_map_filler"/>
             <TextView
                 style="@style/help_map_text"
                 android:text="Nested more than 55 days" />
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            style="@style/simple_layout_horz">
             <TextView
                 style="@style/help_map_block"
                 android:background="@color/color_nest_more_than70"/>
             <TextView
-                style="@style/help_map_block"/>
+                style="@style/help_map_filler"/>
             <TextView
                 style="@style/help_map_text"
                 android:text="Nested more than 70 days" />
         </LinearLayout>
-
-
-
     </LinearLayout>
 
 </RelativeLayout>

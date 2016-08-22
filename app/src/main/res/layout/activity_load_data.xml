@@ -30,6 +30,7 @@
             android:id="@+id/button_folder_up"
             android:background="@android:drawable/ic_menu_revert" />
 
+        <!--
         <Button
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
@@ -37,6 +38,7 @@
             android:text=""
             android:id="@+id/button_folder_root"
             android:background="@android:drawable/ic_media_rew" />
+        -->
 
     </LinearLayout>
 

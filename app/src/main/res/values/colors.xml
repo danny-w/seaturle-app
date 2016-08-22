@@ -5,7 +5,6 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="color_nest_checkBox_buttonTint">#ffcce6ff</color>
-    <color name="color_nest_default">#ff4d94ff</color>
     <color name="color_nest_emerge_less_than5">#ff00cc00</color>
     <color name="color_nest_emerge_more_than5">#ff9933ff</color>
 
@@ -13,5 +12,6 @@
     <color name="color_nest_more_than55">#ffff0000</color>
     <color name="color_nest_more_than50">#ffff6600</color>
     <color name="color_nest_more_than45">#ffffff00</color>
+    <color name="color_nest_less_than45">#ff00cc00</color>
 
 </resources>
